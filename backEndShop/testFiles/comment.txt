@@ -1,0 +1,19 @@
+id = 4 , username = sajjadMP , comment = its very good , star = 3 , show = 1
+
+id = 12 , username = tmp , comment = i dont know about this , star = 0 , show = 1
+
+id = 12 , username = mamadMP , comment = i buy this and work whit about 8 years , star = 5 , show = 1
+
+id = 71 , username = tmp , comment = good :) , star = 3 , show = 0
+
+id = 56 , username = va2222 , comment = excellent , star = 4 , show = 1
+
+id = 10 , username = mah221 , comment = Good for normal use , star = 2 , show = 0
+
+id = 33 , username = ami32 , comment = Highly recommended excellent , star = 5 , show = 1
+
+id = 33 , username = ami32 , comment = very user friendly , star = 4 , show = 1
+
+id = 67 , username = tmp , comment = very bad :( , star = 1 , show = 0
+
+id = 45 , username = tmp , comment = is helpfully , star = 3 , show = 1

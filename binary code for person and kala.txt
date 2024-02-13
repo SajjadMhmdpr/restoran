@@ -1,0 +1,346 @@
+Person extractPerson(string& s)
+{
+    int start = 0;
+    int end = 0;
+    Person p;
+
+    end = s.find(",name=");
+    p.id = stoi(s.substr(3,end-3));
+
+    start = end + 6;
+    end = s.find(",city=");
+    strcpy(p.name , (s.substr(start,end-start)).c_str() );
+
+    start = end + 6;
+    end = s.find(",address=");
+    strcpy(p.city , (s.substr(start,end-start)).c_str() );
+
+    start = end + 9;
+    end = s.find(",email=");
+    strcpy(p.address , (s.substr(start,end-start)).c_str() );
+
+    start = end + 7;
+    end = s.find(",username=");
+    strcpy(p.email , (s.substr(start,end-start)).c_str() );
+
+    start = end + 10;
+    end = s.find(",pass=");
+    strcpy(p.username , (s.substr(start,end-start)).c_str() );
+
+    start = end + 6;
+    end = s.find(",type=");
+    strcpy(p.pass , (s.substr(start,end-start)).c_str() );
+
+    start = end + 6;
+    //end = s.find(",email=");
+    strcpy(p.type , (s.substr(start,s.size()-start)).c_str() );
+
+    return p;
+}
+void readPersonTextFileAndConvertBinary(string& pathTXT)
+{
+    ifstream inputTXT(pathTXT , ios::in);
+    if(!inputTXT)
+        cout<<"cant open TXT file";
+
+    string pathBIN = "E:\\university\\lessons\\pishrafte\\final Project\\persons.dat";
+    ofstream outputBIN( pathBIN  , ios::trunc |ios::out | ios::binary);
+    if(!outputBIN)
+        cout<<"cant open BIN file";
+
+    string line;
+    Person p ;
+
+    for(int i=0 ; i< 100 ;i++)
+    {
+        outputBIN.seekp((i) * sizeof(Person));
+        outputBIN.write(reinterpret_cast<const char*>(&p), sizeof(Person));
+    }
+
+    while(!inputTXT.eof())
+    {
+        getline(inputTXT,line,'\n');
+        p=extractPerson(line);
+
+        outputBIN.seekp((p.id - 1) * sizeof(Person));
+        outputBIN.write(reinterpret_cast<const char*>(&p), sizeof(Person));
+
+    }
+
+
+}
+
+
+
+stKala extractKala(string& s)
+{
+    int start = 0;
+    int end = 0;
+    stKala sk;
+
+    end = s.find(",name=");
+    sk.id = stoi(s.substr(3,end-3));
+
+    start = end + 6;
+    end = s.find(",price=");
+    strcpy(sk.name , (s.substr(start,end-start)).c_str() );
+
+    start = end + 7;
+    end = s.find(",description=");
+    sk.price = stod(s.substr(start,end-start));
+
+    start = end + 13;
+    end = s.find(",amount=");
+    strcpy(sk.description , (s.substr(start,end-start)).c_str() );
+
+    start = end + 8;
+    end = s.find(",category=");
+    sk.amount = stoi(s.substr(start,end-start));
+
+    start = end + 10;
+    end = s.find(",city=");
+    strcpy(sk.category , (s.substr(start,end-start)).c_str() );
+
+
+    start = end + 6;
+    //end = s.find(",email=");
+    strcpy(sk.city , (s.substr(start,s.size()-start)).c_str() );
+
+    return sk;
+}
+void readKalaTextFileAndConvertBinary(string& pathTXT)
+{
+    ifstream inputTXT(pathTXT , ios::in);
+    if(!inputTXT)
+        cout<<"cant open TXT file";
+
+    string pathBIN = "E:\\university\\lessons\\pishrafte\\final Project\\kalas.dat";
+    ofstream outputBIN( pathBIN  , ios::trunc |ios::out | ios::binary);
+    if(!outputBIN)
+        cout<<"cant open BIN file";
+
+    string line;
+    stKala sk ;
+
+    for(int i=0 ; i< 100 ;i++)
+    {
+        outputBIN.seekp((i) * sizeof(stKala));
+        outputBIN.write(reinterpret_cast<const char*>(&sk), sizeof(stKala));
+    }
+
+    while(!inputTXT.eof())
+    {
+        getline(inputTXT,line,'\n');
+        sk=extractKala(line);
+
+        outputBIN.seekp((sk.id - 1) * sizeof(stKala));
+        outputBIN.write(reinterpret_cast<const char*>(&sk), sizeof(stKala));
+
+    }
+
+
+}
+
+
+
+
+
+
+string path = "E:\\university\\lessons\\pishrafte\\final Project\\person.txt";
+
+    readPersonTextFileAndConvertBinary(path);
+
+    cout << setiosflags(ios::left) << setw(5) << "id" << setw(10) << "Name"
+            << setw(10) << "City" << setw(15) << "Address"<< setw(20) << "Email"<< setw(10) << "Username"
+            << setw(10) << "password"<< setw(10) << "type"<< setiosflags(ios::fixed | ios::showpoint)<<endl;
+
+
+    ifstream input("E:\\university\\lessons\\pishrafte\\final Project\\persons.dat" , ios::in|ios::binary);
+    if(!input)
+    {
+        cout<<"error"<<endl;
+    }
+
+    Person p;
+    input.read(reinterpret_cast<char*>(&p), sizeof(Person));
+    while(!input.eof())
+    {
+        cout << fixed<<left << setw(5) << p.id << setw(10) << p.name
+                << setw(10) << p.city << setw(15) << p.address<< setw(20) << p.email<< setw(10) << p.username
+                << setw(10) << p.pass<< setw(10) << p.type<<endl;
+        input.read(reinterpret_cast<char*>(&p), sizeof(Person));
+    }
+
+    cout<<endl;
+
+
+    string path = "E:\\university\\lessons\\pishrafte\\final Project\\kala.txt";
+    readKalaTextFileAndConvertBinary(path);
+
+
+    cout << setiosflags(ios::left) << setw(5) << "id" << setw(20) << "Name"
+            << setw(20) << "Price" << setw(30) << "Description"<< setw(10) << "Amount"<< setw(10) << "Category"
+            << setw(10) << "City"<< setiosflags(ios::fixed | ios::showpoint)<<endl;
+
+    ifstream input("E:\\university\\lessons\\pishrafte\\final Project\\kalas.dat" , ios::in|ios::binary);
+    if(!input)
+    {
+        cout<<"error"<<endl;
+    }
+
+    stKala sk;
+    input.read(reinterpret_cast<char*>(&sk), sizeof(stKala));
+    while(!input.eof())
+    {
+        cout << fixed<<left << setw(5) << sk.id << setw(20) << sk.name
+                << setw(20) << sk.price << setw(30) << sk.description<< setw(10) <<sk.amount
+                   << setw(10) << sk.category << setw(10) << sk.city<< endl;
+        input.read(reinterpret_cast<char*>(&sk), sizeof(stKala));
+    }
+
+    cout<<endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+class stComment
+{
+public:
+    stComment(){id=-1;};
+
+    int id;
+    char username[20];
+    char text[100];
+    int star;
+    bool show;
+};
+
+class stKala
+{
+public:
+    stKala(){id=-1;};
+    int id;
+    char name[50];
+    int price;
+    char description[50];
+    int amount;
+    char category[20];
+    char city[20];
+};
+
+class stPerson
+{
+public:
+    stPerson(){id=-1;} ;
+    int id;
+    char name[30];
+    char city[20];
+    char address[50];
+    char email[30];
+    char username[20];
+    char pass[20];
+    char type[20];
+};
+
+
+
+
+
+
+
+
+/*cout << setiosflags(ios::left) << setw(5) << "id" << setw(10) << "Name"
+            << setw(10) << "City" << setw(15) << "Address"<< setw(20) << "Email"<< setw(10) << "Username"
+            << setw(10) << "password"<< setw(10) << "type"<< setiosflags(ios::fixed | ios::showpoint)<<endl;
+
+    for(int i=0 ; i<(int)persons.size() ;i++)
+    {
+        cout << fixed<<left << setw(5) << persons[i]._id << setw(10) << persons[i]._name
+                << setw(10) << persons[i]._city << setw(15) << persons[i]._address
+                << setw(20) << persons[i]._email<< setw(10) << persons[i]._username
+                << setw(10) << persons[i]._pass<< setw(10) << persons[i]._type<<endl;
+    }
+
+    cout<<endl;*/
+
+
+    /*cout << setiosflags(ios::left) << setw(5) << "id" << setw(20) << "Name"
+            << setw(20) << "Price" << setw(30) << "Description"<< setw(10) << "Amount"<< setw(10) << "Category"
+            << setw(10) << "City"<< setiosflags(ios::fixed | ios::showpoint)<<endl;
+
+
+    for(int i=0 ; i<(int)kalas.size() ;i++)
+    {
+        cout << fixed<<left << setw(5) << kalas[i]._id << setw(20) << kalas[i]._name
+                << setw(20) << kalas[i]._price << setw(30) << kalas[i]._description<< setw(10) <<kalas[i]._amount
+                   << setw(10) << kalas[i]._category << setw(10) << kalas[i]._city<< endl;
+    }
+
+    cout<<endl;*/
+
+
+    /*cout << setiosflags(ios::left) << setw(5) << "id" << setw(15) << "Username"
+         << setw(50) << "Text" << setw(10) << "star"<< setw(10) << "show"<<
+            setiosflags(ios::fixed | ios::showpoint)<<endl;
+
+
+    for(int i=0 ; i<(int)comments.size() ;i++)
+    {
+        cout<<fixed<<left<< setw(5) << comments[i]._idKala << setw(15) << comments[i]._username
+           << setw(50) << comments[i]._text << setw(10) << comments[i]._star<<
+              setw(10) << comments[i]._show<<endl;
+    }
+
+    cout<<endl;*/
+
+
+    /*for(int i=0 ; i<(int)factors.size() ;i++)
+    {
+        int j=0;
+        cout<<"id=";
+        while (factors[i].id[j]!=-1) {
+            cout<<factors[i].id[j]<<',';
+            j++;
+        }
+
+        j=0;
+        cout<<"price=";
+        while (factors[i].price[j]!=-1) {
+            cout<<factors[i].price[j]<<',';
+            j++;
+        }
+
+        j=0;
+        cout<<"count=";
+        while (factors[i].count[j]!=-1) {
+            cout<<factors[i].count[j]<<',';
+            j++;
+        }
+
+        cout<<"username=";
+        cout<<factors[i].username<<endl;
+
+    }
+
+    cout<<endl;*/
+
+
+
+id=5,name=sajjad,city=amol,address=iran
+email=sajjad@gmail.com,username=sajjadMP,pass=12saj34,type=admin
+id=3,name=tahoora,city=shiraz,address=iran
+email=tahoora@gmail.com,username=tahoorMP,pass=56sta78,type=user
+
+
+
+
+

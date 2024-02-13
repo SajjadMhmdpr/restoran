@@ -1,0 +1,20 @@
+id = 4 , name = apple , price = 12 , description = green
+amount = 81 , category = frout , city = mazandaran
+
+id = 12 , name = note 8 pro , price = 50 , description = Xiaomis 2018
+amount = 105 , category = phone , city = tehran
+
+id = 71 , name = note 10 pro , price = 80 , description = Xiaomis 2020
+amount = 36 , category = phone , city = mazandaran
+
+id = 45 , name = Watch 5004 , price = 45 , description = This watch is great for mid-range people
+amount = 31 , category = watch , city = Alborz
+
+id = 67 , name = Men's shirts 009 , price = 70 , description = One of the newest men's fashions
+amount = 10 , category = Dress , city = tehran
+
+id = 10 , name = iphone 13 pro max , price = 1200 , description = Apple's latest product
+amount = 4 , category = phone , city = tehran
+
+id = 15 , name = anborDast , price = 6 , description = for fixing
+amount = 37 , category = abzar , city = mashhad
